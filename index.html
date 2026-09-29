@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080808" />
+
+  <title>Lavish × Jiya × Harsh</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       RESET
+    ========================================================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #070707;
+      color: #f5f0e8;
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: #d4af68;
+      color: #080808;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    /* =========================================================
+       LOADER
+    ========================================================= */
+
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: #050505;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      transition:
+        opacity 1s ease,
+        visibility 1s ease;
+    }
+
+    .loader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .loader-logo {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-style: italic;
+      background: linear-gradient(
+        120deg,
+        #fff,
+        #d4af68,
+        #fff
+      );
+      background-size: 200% auto;
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: shine 2s linear infinite;
+    }
+
+    .loader-line {
+      width: 180px;
+      height: 1px;
+      background: #333;
+      margin: 25px auto;
+      overflow: hidden;
+    }
+
+    .loader-line::after {
+      content: "";
+      display: block;
+      width: 50%;
+      height: 100%;
+      background: #d4af68;
+      animation: loading 1.5s infinite ease-in-out;
+    }
+
+    @keyframes loading {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(300%);
+      }
+    }
+
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    /* =========================================================
+       CURSOR
+    ========================================================= */
+
+    .cursor {
+      width: 8px;
+      height: 8px;
+      background: #d4af68;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      box-shadow:
+        0 0 15px #d4af68,
+        0 0 35px rgba(212,175,104,.5);
+    }
+
+    .cursor-ring {
+      width: 35px;
+      height: 35px;
+      border: 1px solid rgba(212,175,104,.6);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition:
+        width .3s ease,
+        height .3s ease,
+        background .3s ease;
+    }
+
+    body.cursor-hover .cursor-ring {
+      width: 65px;
+      height: 65px;
+      background: rgba(212,175,104,.06);
+    }
+
+    @media (max-width: 768px) {
+      .cursor,
+      .cursor-ring {
+        display: none;
+      }
+    }
+
+    /* =========================================================
+       BACKGROUND
+    ========================================================= */
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .12;
+    }
+
+    .orb.one {
+      background: #d4af68;
+      top: -200px;
+      left: -200px;
+      animation: floatOne 15s infinite alternate ease-in-out;
+    }
+
+    .orb.two {
+      background: #8c6b35;
+      right: -250px;
+      top: 35%;
+      animation: floatTwo 18s infinite alternate ease-in-out;
+    }
+
+    .orb.three {
+      background: #b48b4a;
+      bottom: -250px;
+      left: 30%;
+      animation: floatThree 20s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatOne {
+      to {
+        transform: translate(180px, 120px);
+      }
+    }
+
+    @keyframes floatTwo {
+      to {
+        transform: translate(-180px, -100px);
+      }
+    }
+
+    @keyframes floatThree {
+      to {
+        transform: translate(100px, -150px);
+      }
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .035;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    }
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 90px;
+      padding: 0 6vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      transition: .5s ease;
+    }
+
+    nav.scrolled {
+      height: 70px;
+      background: rgba(7,7,7,.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 1.4rem;
+      letter-spacing: .08em;
+    }
+
+    .logo span {
+      color: #d4af68;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 35px;
+      list-style: none;
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: #aaa;
+    }
+
+    .nav-links a {
+      transition: .3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 1px;
+      background: #d4af68;
+      bottom: -8px;
+      left: 0;
+      transition: .3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-pill {
+      border: 1px solid rgba(212,175,104,.4);
+      padding: 11px 20px;
+      border-radius: 100px;
+      color: #d4af68;
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+    }
+
+    @media (max-width: 700px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-pill {
+        display: none;
+      }
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .hero {
+      min-height: 100vh;
+      padding: 150px 7vw 80px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      opacity: .08;
+      background-image:
+        linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: linear-gradient(to bottom, black, transparent);
+    }
+
+    .hero-content {
+      max-width: 1100px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: #d4af68;
+      text-transform: uppercase;
+      letter-spacing: .35em;
+      font-size: .7rem;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 45px;
+      height: 1px;
+      background: #d4af68;
+    }
+
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(4rem, 11vw, 10rem);
+      font-weight: 500;
+      line-height: .85;
+      letter-spacing: -.06em;
+    }
+
+    .hero h1 .outline {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(245,240,232,.65);
+    }
+
+    .hero h1 .gold {
+      color: #d4af68;
+      font-style: italic;
+    }
+
+    .hero-description {
+      max-width: 550px;
+      margin-top: 45px;
+      color: #999;
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 35px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 16px 28px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,.18);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: .68rem;
+      transition:
+        transform .4s cubic-bezier(.2,.8,.2,1),
+        background .4s ease,
+        color .4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn.primary {
+      background: #f1eadc;
+      color: #0b0b0b;
+      border-color: #f1eadc;
+    }
+
+    .btn.secondary {
+      color: #ccc;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+    }
+
+    .btn.primary:hover {
+      background: #d4af68;
+      border-color: #d4af68;
+    }
+
+    .hero-number {
+      position: absolute;
+      right: 7vw;
+      bottom: 12vh;
+      font-family: "Playfair Display", serif;
+      font-size: 13rem;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,.07);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* =========================================================
+       SECTION
+    ========================================================= */
+
+    section {
+      padding: 140px 7vw;
+      position: relative;
+    }
+
+    .section-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 70px;
+      gap: 30px;
+    }
+
+    .section-label {
+      color: #d4af68;
+      text-transform: uppercase;
+      font-size: .7rem;
+      letter-spacing: .25em;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: 500;
+      line-height: .95;
+    }
+
+    .section-title em {
+      color: #d4af68;
+      font-weight: 500;
+    }
+
+    .section-description {
+      max-width: 400px;
+      color: #888;
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       FRIEND CARDS
+    ========================================================= */
+
+    .friends {
+      display: grid;
+      grid-template-columns: 1.3fr 1.3fr .8fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .friend-card {
+      min-height: 600px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.09),
+          rgba(255,255,255,.015)
+        );
+      border: 1px solid rgba(255,255,255,.09);
+      transition:
+        transform .7s cubic-bezier(.2,.8,.2,1),
+        border-color .5s ease;
+    }
+
+    .friend-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(
+          circle at var(--x,50%) var(--y,50%),
+          rgba(212,175,104,.22),
+          transparent 35%
+        );
+      opacity: 0;
+      transition: opacity .5s ease;
+      pointer-events: none;
+    }
+
+    .friend-card:hover::before {
+      opacity: 1;
+    }
+
+    .friend-card:hover {
+      transform: translateY(-12px);
+      border-color: rgba(212,175,104,.45);
+    }
+
+    .friend-card.large {
+      min-height: 680px;
+    }
+
+    .card-number {
+      position: absolute;
+      top: 25px;
+      left: 28px;
+      font-size: .65rem;
+      color: #888;
+      letter-spacing: .2em;
+      z-index: 2;
+    }
+
+    .card-image {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .portrait {
+      width: 75%;
+      height: 75%;
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle at 50% 30%,
+          #f2dfc0,
+          #a37d52 25%,
+          #34271d 50%,
+          #0b0b0b 72%
+        );
+      filter: saturate(.7);
+      opacity: .5;
+      transition:
+        transform 1s cubic-bezier(.2,.8,.2,1),
+        opacity .7s ease;
+      box-shadow:
+        0 0 100px rgba(212,175,104,.15);
+    }
+
+    .friend-card:hover .portrait {
+      transform: scale(1.08);
+      opacity: .72;
+    }
+
+    .card-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          to bottom,
+          transparent 30%,
+          #080808 88%
+        );
+    }
+
+    .card-content {
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      bottom: 30px;
+      z-index: 3;
+    }
+
+    .card-role {
+      color: #d4af68;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      font-size: .6rem;
+      margin-bottom: 10px;
+    }
+
+    .card-name {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      line-height: .85;
+      font-weight: 500;
+    }
+
+    .card-bio {
+      color: #aaa;
+      line-height: 1.6;
+      font-size: .82rem;
+      max-width: 330px;
+      margin-top: 18px;
+    }
+
+    .card-tag {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 8px 13px;
+      border: 1px solid rgba(212,175,104,.25);
+      color: #c5a768;
+      font-size: .58rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    /* Different visual identity */
+
+    .lavish .portrait {
+      background:
+        radial-gradient(
+          circle at 50% 25%,
+          #fff0ce,
+          #c28b45 20%,
+          #5a3820 42%,
+          #120d09 68%
+        );
+    }
+
+    .jiya .portrait {
+      background:
+        radial-gradient(
+          circle at 50% 25%,
+          #ffe8dc,
+          #bd7d68 20%,
+          #54352d 43%,
+          #110b09 70%
+        );
+    }
+
+    .harsh .portrait {
+      width: 65%;
+      height: 65%;
+      background:
+        radial-gradient(
+          circle at 50% 25%,
+          #e9c6a0,
+          #8e5d3d 25%,
+          #352117 50%,
+          #0c0907 72%
+        );
+    }
+
+    /* =========================================================
+       QUOTE
+    ========================================================= */
+
+    .quote-section {
+      min-height: 80vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .quote {
+      max-width: 1000px;
+    }
+
+    .quote-mark {
+      color: #d4af68;
+      font-family: "Playfair Display", serif;
+      font-size: 5rem;
+      line-height: .5;
+    }
+
+    .quote-text {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      line-height: 1.05;
+      margin: 35px 0;
+    }
+
+    .quote-text em {
+      color: #d4af68;
+    }
+
+    .quote-small {
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: .25em;
+      font-size: .65rem;
+    }
+
+    /* =========================================================
+       TIMELINE
+    ========================================================= */
+
+    .timeline {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 50px;
+      padding: 40px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .timeline-year {
+      color: #d4af68;
+      font-family: "Playfair Display", serif;
+      font-size: 1.4rem;
+    }
+
+    .timeline-title {
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .timeline-text {
+      color: #888;
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       FINAL CTA
+    ========================================================= */
+
+    .final {
+      min-height: 85vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .final::before {
+      content: "L J H";
+      position: absolute;
+      font-family: "Playfair Display", serif;
+      font-size: 30vw;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,.035);
+      white-space: nowrap;
+    }
+
+    .final-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .final-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(4rem, 10vw, 10rem);
+      line-height: .85;
+      font-weight: 500;
+    }
+
+    .final-title span {
+      color: #d4af68;
+      font-style: italic;
+    }
+
+    .final-sub {
+      color: #777;
+      margin: 35px auto;
+      max-width: 450px;
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    footer {
+      padding: 35px 7vw;
+      border-top: 1px solid rgba(255,255,255,.07);
+      display: flex;
+      justify-content: space-between;
+      color: #666;
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+    }
+
+    footer strong {
+      color: #d4af68;
+      font-weight: 500;
+    }
+
+    /* =========================================================
+       REVEAL ANIMATIONS
+    ========================================================= */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition:
+        opacity 1s cubic-bezier(.2,.8,.2,1),
+        transform 1s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: .1s;
+    }
+
+    .delay-2 {
+      transition-delay: .2s;
+    }
+
+    .delay-3 {
+      transition-delay: .3s;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 1000px) {
+      .friends {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .friend-card.large {
+        min-height: 600px;
+      }
+
+      .friend-card:last-child {
+        grid-column: span 2;
+        min-height: 500px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      section {
+        padding: 100px 6vw;
+      }
+
+      .hero {
+        padding: 140px 6vw 80px;
+      }
+
+      .hero h1 {
+        font-size: clamp(4rem, 19vw, 7rem);
+      }
+
+      .hero-number {
+        display: none;
+      }
+
+      .friends {
+        grid-template-columns: 1fr;
+      }
+
+      .friend-card,
+      .friend-card.large,
+      .friend-card:last-child {
+        min-height: 580px;
+        grid-column: auto;
+      }
+
+      .section-top {
+        display: block;
+      }
+
+      .section-description {
+        margin-top: 25px;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =======================================================
+       LOADER
+  ======================================================== -->
+
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-logo">L × J × H</div>
+      <div class="loader-line"></div>
+    </div>
+  </div>
+
+  <!-- Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- Background -->
+  <div class="ambient">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+  </div>
+
+  <div class="noise"></div>
+
+  <!-- =======================================================
+       NAVIGATION
+  ======================================================== -->
+
+  <nav id="navbar">
+
+    <a href="#home" class="logo">
+      L<span>×</span>J<span>×</span>H
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#friends">The Trio</a></li>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#moments">Moments</a></li>
+    </ul>
+
+    <a href="#friends" class="nav-pill">
+      Meet The Trio
+    </a>
+
+  </nav>
+
+  <!-- =======================================================
+       HERO
+  ======================================================== -->
+
+  <main>
+
+    <section class="hero" id="home">
+
+      <div class="hero-grid"></div>
+
+      <div class="hero-content">
+
+        <div class="eyebrow reveal">
+          Three minds · One story
+        </div>
+
+        <h1 class="reveal delay-1">
+          <span>Three</span><br>
+          <span class="outline">Different</span><br>
+          <span class="gold">Souls.</span>
+        </h1>
+
+        <p class="hero-description reveal delay-2">
+          Meet Lavish, Jiya and Harsh — three personalities,
+          three perspectives, and one friendship that makes
+          every ordinary moment feel unforgettable.
+        </p>
+
+        <div class="hero-actions reveal delay-3">
+          <a href="#friends" class="btn primary magnetic">
+            Discover Them
+          </a>
+
+          <a href="#story" class="btn secondary magnetic">
+            Our Story ↓
+          </a>
+        </div>
+
+      </div>
+
+      <div class="hero-number">
+        03
+      </div>
+
+    </section>
+
+    <!-- =====================================================
+         FRIENDS
+    ====================================================== -->
+
+    <section id="friends">
+
+      <div class="section-top reveal">
+
+        <div>
+          <div class="section-label">
+            The People
+          </div>
+
+          <h2 class="section-title">
+            Meet the<br>
+            <em>trio.</em>
+          </h2>
+        </div>
+
+        <p class="section-description">
+          Two personalities that naturally steal the spotlight,
+          and one who completes the picture. Different energy,
+          same circle.
+        </p>
+
+      </div>
+
+      <div class="friends">
+
+        <!-- LAVISH -->
+
+        <article
+          class="friend-card large lavish reveal"
+          data-name="Lavish"
+        >
+
+          <div class="card-number">
+            01 / FEATURED
+          </div>
+
+          <div class="card-image">
+            <div class="portrait"></div>
+          </div>
+
+          <div class="card-content">
+
+            <div class="card-role">
+              The Presence
+            </div>
+
+            <h3 class="card-name">
+              Lavish
+            </h3>
+<img src="lavish.jpg.png" >
+            <p class="card-bio">
+              The kind of personality that enters a room
+              before the introduction does. Confident,
+              expressive and impossible to overlook.
+            </p>
+
+            <span class="card-tag">
+              Main Character Energy
+            </span>
+
+          </div>
+
+        </article>
+
+
+        <!-- JIYA -->
+
+        <article
+          class="friend-card large jiya reveal delay-1"
+          data-name="Jiya"
+        >
+
+          <div class="card-number">
+            02 / FEATURED
+          </div>
+
+          <div class="card-image">
+            <div class="portrait"></div>
+          </div>
+
+          <div class="card-content">
+
+            <div class="card-role">
+              The Aura
+            </div>
+
+            <h3 class="card-name">
+              Jiya
+            </h3>
+<img src="jiya.jpg.jpg" >
+            <p class="card-bio">
+              A mix of elegance, chaos and effortless charm.
+              The one who turns simple conversations into
+              stories worth remembering.
+            </p>
+
+            <span class="card-tag">
+              Golden Energy
+            </span>
+
+          </div>
+
+        </article>
+
+
+        <!-- HARSH -->
+
+        <article
+          class="friend-card harsh reveal delay-2"
+          data-name="Harsh"
+        >
+
+          <div class="card-number">
+            03
+          </div>
+
+          <div class="card-image">
+            <div class="portrait"></div>
+          </div>
+
+          <div class="card-content">
+
+            <div class="card-role">
+              The Balance
+            </div>
+
+            <h3 class="card-name">
+              Harsh
+            </h3>
+<img src="harsh.jpg.png" >
+            <p class="card-bio">
+              Calm when everything gets loud. The steady
+              energy that keeps the trio grounded.
+            </p>
+
+            <span class="card-tag">
+              The Balance
+            </span>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         QUOTE
+    ====================================================== -->
+
+    <section class="quote-section">
+
+      <div class="quote reveal">
+
+        <div class="quote-mark">
+          “
+        </div>
+
+        <p class="quote-text">
+          Some people enter your life.
+          <br>
+          The right ones become
+          <em>your life.</em>
+        </p>
+
+        <div class="quote-small">
+          Lavish · Jiya · Harsh
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STORY
+    ====================================================== -->
+
+    <section id="story">
+
+      <div class="section-top reveal">
+
+        <div>
+          <div class="section-label">
+            The Journey
+          </div>
+
+          <h2 class="section-title">
+            A story<br>
+            <em>still writing.</em>
+          </h2>
+        </div>
+
+        <p class="section-description">
+          The best friendships aren't defined by a single
+          moment. They're built from hundreds of small ones.
+        </p>
+
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item reveal">
+
+          <div class="timeline-year">
+            01
+          </div>
+
+          <div>
+            <h3 class="timeline-title">
+              The Beginning
+            </h3>
+
+            <p class="timeline-text">
+              Three people. Three personalities.
+              Somewhere between random conversations
+              and shared moments, something clicked.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="timeline-item reveal">
+
+          <div class="timeline-year">
+            02
+          </div>
+
+          <div>
+            <h3 class="timeline-title">
+              The Chaos
+            </h3>
+
+            <p class="timeline-text">
+              Inside jokes became traditions. Random plans
+              became memories. And somehow every ordinary
+              day became slightly more interesting.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="timeline-item reveal">
+
+          <div class="timeline-year">
+            03
+          </div>
+
+          <div>
+            <h3 class="timeline-title">
+              The Bond
+            </h3>
+
+            <p class="timeline-text">
+              Different opinions, different moods,
+              different worlds — but the same people
+              showing up for each other.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="timeline-item reveal">
+
+          <div class="timeline-year">
+            04
+          </div>
+
+          <div>
+            <h3 class="timeline-title">
+              To Be Continued
+            </h3>
+
+            <p class="timeline-text">
+              Because the best chapter is always the one
+              you haven't lived yet.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MOMENTS
+    ====================================================== -->
+
+    <section id="moments" class="final">
+
+      <div class="final-content reveal">
+
+        <div class="section-label">
+          More moments. More memories.
+        </div>
+
+        <h2 class="final-title">
+          Stay <span>legendary.</span>
+        </h2>
+
+        <p class="final-sub">
+          Three names. Countless memories.
+          One story that isn't finished yet.
+        </p>
+
+        <a
+          href="#home"
+          class="btn primary magnetic"
+        >
+          Back To Top ↑
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================================
+       FOOTER
+  ======================================================== -->
+
+  <footer>
+
+    <div>
+      L × J × H — <strong>THE TRIO</strong>
+    </div>
+
+    <div>
+      Made with ✦ friendship
+    </div>
+
+  </footer>
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+  ======================================================== -->
+
+  <script>
+
+    /* =====================================================
+       LOADER
+    ====================================================== */
+
+    window.addEventListener("load", () => {
+
+      setTimeout(() => {
+        document
+          .getElementById("loader")
+          .classList.add("hide");
+      }, 1000);
+
+    });
+
+
+    /* =====================================================
+       CUSTOM CURSOR
+    ====================================================== */
+
+    const cursor = document.querySelector(".cursor");
+    const ring = document.querySelector(".cursor-ring");
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    let ringX = 0;
+    let ringY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      cursor.style.left = mouseX + "px";
+      cursor.style.top = mouseY + "px";
+
+    });
+
+    function animateCursor() {
+
+      ringX += (mouseX - ringX) * .12;
+      ringY += (mouseY - ringY) * .12;
+
+      ring.style.left = ringX + "px";
+      ring.style.top = ringY + "px";
+
+      requestAnimationFrame(animateCursor);
+
+    }
+
+    animateCursor();
+
+
+    /* =====================================================
+       CURSOR HOVER
+    ====================================================== */
+
+    document
+      .querySelectorAll("a, button, .friend-card")
+      .forEach(element => {
+
+        element.addEventListener("mouseenter", () => {
+          document.body.classList.add("cursor-hover");
+        });
+
+        element.addEventListener("mouseleave", () => {
+          document.body.classList.remove("cursor-hover");
+        });
+
+      });
+
+
+    /* =====================================================
+       NAVBAR
+    ====================================================== */
+
+    const navbar = document.getElementById("navbar");
+
+    window.addEventListener("scroll", () => {
+
+      if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+
+    });
+
+
+    /* =====================================================
+       SCROLL REVEAL
+    ====================================================== */
+
+    const revealElements =
+      document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+
+        entries.forEach(entry => {
+
+          if (entry.isIntersecting) {
+
+            entry.target.classList.add("active");
+
+            observer.unobserve(entry.target);
+
+          }
+
+        });
+
+      },
+      {
+        threshold: .12
+      }
+    );
+
+    revealElements.forEach(element => {
+      observer.observe(element);
+    });
+
+
+    /* =====================================================
+       CARD MOUSE LIGHT
+    ====================================================== */
+
+    document
+      .querySelectorAll(".friend-card")
+      .forEach(card => {
+
+        card.addEventListener("mousemove", (e) => {
+
+          const rect =
+            card.getBoundingClientRect();
+
+          const x =
+            ((e.clientX - rect.left) / rect.width) * 100;
+
+          const y =
+            ((e.clientY - rect.top) / rect.height) * 100;
+
+          card.style.setProperty("--x", `${x}%`);
+          card.style.setProperty("--y", `${y}%`);
+
+        });
+
+      });
+
+
+    /* =====================================================
+       MAGNETIC BUTTONS
+    ====================================================== */
+
+    document
+      .querySelectorAll(".magnetic")
+      .forEach(button => {
+
+        button.addEventListener("mousemove", (e) => {
+
+          const rect =
+            button.getBoundingClientRect();
+
+          const x =
+            e.clientX - rect.left - rect.width / 2;
+
+          const y =
+            e.clientY - rect.top - rect.height / 2;
+
+          button.style.transform =
+            `translate(${x * .15}px, ${y * .15}px)`;
+
+        });
+
+        button.addEventListener("mouseleave", () => {
+
+          button.style.transform =
+            "translate(0, 0)";
+
+        });
+
+      });
+
+
+    /* =====================================================
+       CARD TILT
+    ====================================================== */
+
+    document
+      .querySelectorAll(".friend-card")
+      .forEach(card => {
+
+        card.addEventListener("mousemove", (e) => {
+
+          const rect =
+            card.getBoundingClientRect();
+
+          const centerX =
+            rect.left + rect.width / 2;
+
+          const centerY =
+            rect.top + rect.height / 2;
+
+          const rotateX =
+            (e.clientY - centerY) / 35;
+
+          const rotateY =
+            (centerX - e.clientX) / 35;
+
+          card.style.transform =
+            `perspective(1000px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateY(-12px)`;
+
+        });
+
+        card.addEventListener("mouseleave", () => {
+
+          card.style.transform =
+            "perspective(1000px) rotateX(0) rotateY(0) translateY(0)";
+
+        });
+
+      });
+
+
+    /* =====================================================
+       PARALLAX HERO NUMBER
+    ====================================================== */
+
+    const heroNumber =
+      document.querySelector(".hero-number");
+
+    window.addEventListener("scroll", () => {
+
+      const scroll =
+        window.scrollY;
+
+      if (heroNumber) {
+
+        heroNumber.style.transform =
+          `translateY(${scroll * .18}px)`;
+
+      }
+
+    });
+
+
+    /* =====================================================
+       SMOOTH ANCHOR SCROLL
+    ====================================================== */
+
+    document
+      .querySelectorAll('a[href^="#"]')
+      .forEach(link => {
+
+        link.addEventListener("click", function(e) {
+
+          const target =
+            document.querySelector(
+              this.getAttribute("href")
+            );
+
+          if (!target) return;
+
+          e.preventDefault();
+
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+        });
+
+      });
+
+  </script>
+
+</body>
+</html>
